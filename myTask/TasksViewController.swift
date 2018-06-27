@@ -11,7 +11,6 @@ import RealmSwift
 
 class TasksViewController: UITableViewController {
 
-    var tasklistViewController: TaskListViewController!
     var taskList: TaskList!
     var addAction: UIAlertAction!
     var openTasks: Results<Task>!
@@ -86,7 +85,9 @@ class TasksViewController: UITableViewController {
     func nameTextFieldChangeValue(nameTextField: UITextField) {
         addAction.isEnabled = (nameTextField.text?.characters.count)! > 0
     }
-    
+}
+
+extension TasksViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
