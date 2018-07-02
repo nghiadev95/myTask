@@ -10,12 +10,12 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-class TaskListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TaskListViewController: UIViewController {
 
     var lists: Results<TaskList>!
     var taskListTB: UITableView!
-    var sortSegmentControl: UISegmentedControl!
-    var addAction: UIAlertAction!
+    private var isAscendingSort: Bool = false
+    private var orderType: OrderType = .name
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,25 +29,15 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func reloadData() {
         lists = RealmService.shared.reference().objects(TaskList.self)
-        taskListTB.reloadData()
+        taskListTB.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
     func setupUI() {
         view.backgroundColor = UIColor.white
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewTaskList))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "sort"), style: .plain, target: self, action: #selector(showActionSheetChangeOrder))
         navigationItem.title = AppMessage.TASK_LIST
-        
-        sortSegmentControl = UISegmentedControl(items: ["A-Z","Date"])
-        sortSegmentControl.selectedSegmentIndex = 0
-        sortSegmentControl.addTarget(self, action: #selector(changeSortSetting), for: .valueChanged)
-        view.addSubview(sortSegmentControl)
-        sortSegmentControl.snp.makeConstraints { (maker) in
-            maker.top.equalTo((self.navigationController?.navigationBar.frame.maxY)!)
-            maker.left.equalToSuperview()
-            maker.right.equalToSuperview()
-            maker.height.equalTo(25)
-        }
         
         taskListTB = UITableView()
         taskListTB.dataSource = self
@@ -56,30 +46,27 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
         view.addSubview(taskListTB)
         taskListTB.snp.makeConstraints { (make) in
-            make.top.equalTo(sortSegmentControl.snp.bottom).offset(1)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.top.left.right.bottom.equalToSuperview()
         }
     }
     
     func addNewTaskList() {
-        showInputDialog(isUpdate: false) { (isSuccess) in
+        showInputDialog(isUpdate: false) { [unowned self] (isSuccess) in
             if isSuccess {
-                
+                self.taskListTB.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .automatic)
             } else {
-                
+                self.view.makeToast("Add new Task List fail!!!")
             }
         }
     }
     
-    func changeSortSetting() {
-        if sortSegmentControl.selectedSegmentIndex == 0 {
-            lists = lists.sorted(byKeyPath: "name")
+    func changeOrderSetting() {
+        if orderType == OrderType.name {
+            lists = lists.sorted(byKeyPath: "name", ascending: isAscendingSort)
         } else {
-            lists = lists.sorted(byKeyPath: "createdAt", ascending: false)
+            lists = lists.sorted(byKeyPath: "createdAt", ascending: isAscendingSort)
         }
-        taskListTB.reloadData()
+        taskListTB.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
     func showInputDialog(isUpdate: Bool, taskList: TaskList? = nil, callback: @escaping (Bool) -> Void) {
@@ -107,7 +94,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
             textfield.text = nameTask
             textfield.placeholder = AppMessage.MY_TASK_LIST
         }
-        addAction = UIAlertAction(title: doneTitle, style: .default, handler: { (action) in
+        let addAction = UIAlertAction(title: doneTitle, style: .default, handler: { [unowned self] (action) in
             guard let name = nameTextField.text else {
                 callback(false)
                 return
@@ -117,18 +104,9 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
                 return
             }
             if isUpdate {
-                try! RealmService.shared.reference().write {
-                    taskList!.name = name
-                    self.reloadData()
-                }
+                TaskListService.shared.update(taskList: taskList!, newName: name, callBack: callback)
             } else {
-                let newTaskList = TaskList()
-                newTaskList.name = name
-                try! RealmService.shared.reference().write {
-                    let newRowIndex = self.lists.count
-                    RealmService.shared.reference().add(newTaskList)
-                    self.taskListTB.insertRows(at: [IndexPath(row: newRowIndex, section: 0)], with: .automatic)
-                }
+                TaskListService.shared.add(name: name, callBack: callback)
             }
         })
         
@@ -137,10 +115,37 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(alertController, animated: true, completion: nil)
     }
 
+    @objc private func showActionSheetChangeOrder() {
+        let typeVC = UIAlertController(title: "Change type", message: nil, preferredStyle: .actionSheet)
+        
+        typeVC.addAction(UIAlertAction(title: "Ascending", style: .default) { [unowned self] (action) in
+            self.isAscendingSort = true
+            self.changeOrderSetting()
+        })
+        typeVC.addAction(UIAlertAction(title: "Descending", style: .default) { [unowned self] (action) in
+            self.isAscendingSort = false
+            self.changeOrderSetting()
+        })
+        
+        let alertVC = UIAlertController(title: "Change order", message: nil, preferredStyle: .actionSheet)
+        alertVC.addAction(UIAlertAction(title: "Name", style: .default) { [unowned self] (action) in
+            self.orderType = .name
+            self.present(typeVC, animated: true, completion: nil)
+        })
+        alertVC.addAction(UIAlertAction(title: "Date Created", style: .default) { [unowned self] (action) in
+            self.orderType = .date
+            self.present(typeVC, animated: true, completion: nil)
+        })
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel) { [unowned self] (action) in
+            self.isAscendingSort = true
+            self.dismiss(animated: true, completion: nil)
+        })
     
+        self.present(alertVC, animated: true, completion: nil)
+    }
 }
 
-extension TaskListViewController {
+extension TaskListViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -170,18 +175,17 @@ extension TaskListViewController {
         let editAction = UITableViewRowAction(style: .default, title: AppMessage.EDIT) { (action, index) in
             self.showInputDialog(isUpdate: true, taskList: self.lists[indexPath.row], callback: { (isSuccess) in
                 if isSuccess {
-                    
-                } else {
-                    
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
             })
         }
         editAction.backgroundColor = AppConstant.EDIT_ACTION_BG_COLOR
         let deleteAction = UITableViewRowAction(style: .default, title: AppMessage.DELETE) { (action, index) in
-            try! RealmService.shared.reference().write {
-                RealmService.shared.reference().delete(self.lists[indexPath.row])
-                self.taskListTB.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
-            }
+            TaskListService.shared.delete(taskList: self.lists[indexPath.row], callBack: { [unowned self] (isSuccess) in
+                if isSuccess {
+                    self.taskListTB.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+                }
+            })
         }
         return [editAction, deleteAction]
     }

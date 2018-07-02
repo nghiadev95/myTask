@@ -9,6 +9,7 @@
 import RealmSwift
 
 final class RealmService {
+    
     public static let shared = RealmService()
     private let realm: Realm!
     
