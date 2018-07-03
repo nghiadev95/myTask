@@ -12,9 +12,9 @@ import RealmSwift
 class TasksViewController: UITableViewController {
 
     var taskList: TaskList!
-    var addAction: UIAlertAction!
     var openTasks: Results<Task>!
     var completedTasks : Results<Task>!
+    var selectedTask: Task?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +24,12 @@ class TasksViewController: UITableViewController {
     
     func setupUIControl() {
         navigationItem.title = taskList.name
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewTask))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openTaskView))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
     }
     
     func addNewTask() {
-        showAlertBox(task: nil)
+        openTaskView()
     }
     
     func readTaskListAndReloadTableData() {
@@ -38,52 +38,29 @@ class TasksViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func showAlertBox(task: Task!) {
-        var nameTask = ""
-        var title = "New Task"
-        var doneTitle = "Create"
-        if task != nil{
-            title = "Update Task"
-            doneTitle = "Update"
-            nameTask = task.name
+    @objc func openTaskView() {
+        let taskVC = NewTaskViewController(style: .grouped)
+        if selectedTask != nil {
+            taskVC.task = selectedTask
         }
-        let alertController = UIAlertController(title: title, message: "Enter name of task", preferredStyle: .alert)
-        var nameTextField: UITextField!
-        alertController.addTextField { (textfield) in
-            nameTextField = textfield
-            textfield.text = nameTask
-            textfield.placeholder = "My Task"
-            textfield.addTarget(self, action: #selector(self.nameTextFieldChangeValue), for: .editingChanged)
-        }
-        addAction = UIAlertAction(title: doneTitle, style: .default, handler: { (action) in
-            guard let name = nameTextField.text else {
-                return
-            }
-            if task != nil {
-                //Update
-                try! RealmService.shared.reference().write {
-                    task.name = name
-                    self.readTaskListAndReloadTableData()
-                }
-            } else {
-                //Create
-                let newTask = Task()
-                newTask.name = name
-                try! RealmService.shared.reference().write {
-                    self.taskList.tasks.append(newTask)
-                    self.readTaskListAndReloadTableData()
-                }
-            }
-        })
-        addAction.isEnabled = false
-        
-        alertController.addAction(addAction)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(alertController, animated: true, completion: nil)
+        taskVC.taskList = taskList
+        taskVC.delegate = self
+        navigationController?.pushViewController(taskVC, animated: true)
+    }
+}
+
+extension TasksViewController: NewTaskViewControllerDelegate {
+    func newTaskViewController(_ controller: NewTaskViewController, didFinishingAdding item: Task) {
+        let section = item.isCompleted ?  1 : 0
+        let insertedList = item.isCompleted ? completedTasks : openTasks
+        self.tableView.insertRows(at: [IndexPath(row: insertedList!.count - 1, section: section)], with: .automatic)
     }
     
-    func nameTextFieldChangeValue(nameTextField: UITextField) {
-        addAction.isEnabled = (nameTextField.text?.characters.count)! > 0
+    func newTaskViewController(_ controller: NewTaskViewController, didFinishingEditing item: Task) {
+        let section = item.isCompleted ?  1 : 0
+        let insertedList = item.isCompleted ? completedTasks : openTasks
+        let row = insertedList!.index(of: item)!
+        self.tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: .automatic)
     }
 }
 
@@ -100,55 +77,41 @@ extension TasksViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        if section == 0{
-            return "Open"
-        }
-        return "Completed"
+        return section == 0 ? "Open" : "Completed"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")
-        var task: Task!
-        if indexPath.section == 0 {
-            task = openTasks[indexPath.row]
-        }
-        else{
-            task = completedTasks[indexPath.row]
-        }
-        
+        let task = indexPath.section == 0 ? openTasks[indexPath.row] : completedTasks[indexPath.row]
         cell?.textLabel?.text = task.name
         return cell!
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let task: Task!
-        if indexPath.section == 0 {
-            task = openTasks[indexPath.row]
-        }
-        else{
-            task = completedTasks[indexPath.row]
-        }
+        let task = indexPath.section == 0 ? openTasks[indexPath.row] : completedTasks[indexPath.row]
         
-        let editAction = UITableViewRowAction(style: .default, title: "Edit") { (action, index) in
-            self.showAlertBox(task: task)
+        let editAction = UITableViewRowAction(style: .default, title: "Edit") { [unowned self] (action, index) in
+            self.selectedTask = task
+            self.openTaskView()
         }
-        editAction.backgroundColor = UIColor(red: 68/255, green: 219/255, blue: 94/255, alpha: 1)
+        editAction.backgroundColor = AppConstant.EDIT_ACTION_BG_COLOR
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { (action, index) in
-            try! RealmService.shared.reference().write {
-                RealmService.shared.reference().delete(task)
-                self.readTaskListAndReloadTableData()
-            }
+            TaskService.shared.delete(task: task, callBack: { (isSuccess) in
+                if isSuccess {
+                    self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                }
+            })
         }
         
         let doneAction = UITableViewRowAction(style: .default, title: "Done") { (action, index) in
-            try! RealmService.shared.reference().write {
-                task.isCompleted = true
-                self.readTaskListAndReloadTableData()
-            }
+            TaskService.shared.update(task: task, newName: task.name, isComplete: true, callBack: { (isSuccess) in
+                if isSuccess {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            })
         }
-        doneAction.backgroundColor = UIColor(red: 0/225, green: 118/255, blue: 255/255, alpha: 1)
+        doneAction.backgroundColor = AppConstant.DONE_ACTION_BG_COLOR
         
         return indexPath.section == 0 ? [editAction,deleteAction,doneAction] : [editAction,deleteAction]
     }

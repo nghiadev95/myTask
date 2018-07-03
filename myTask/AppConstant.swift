@@ -10,6 +10,7 @@ import UIKit
 
 class AppConstant {
     public static let EDIT_ACTION_BG_COLOR = UIColor(red: 68/255, green: 219/255, blue: 94/255, alpha: 1)
+    public static let DONE_ACTION_BG_COLOR = UIColor(red: 0/225, green: 118/255, blue: 255/255, alpha: 1)
 }
 
 enum OrderType {
