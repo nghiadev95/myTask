@@ -12,20 +12,21 @@ final class TaskListService {
     public static let shared = TaskListService()
     private init() {}
     
-    func add(name: String, callBack: (Bool) -> Void) {
+    func add(name: String, callBack: (Bool, TaskList) -> Void) {
         try! RealmService.shared.reference().write {
             let newTaskList = TaskList()
             newTaskList.name = name
             RealmService.shared.reference().add(newTaskList)
+            callBack(true, newTaskList)
         }
-        callBack(true)
     }
     
-    func update(taskList: TaskList, newName: String, callBack: (Bool) -> Void) {
+    func update(taskList: TaskList, newName: String, callBack: (Bool, TaskList) -> Void) {
         try! RealmService.shared.reference().write {
             taskList.name = newName
+            callBack(true, taskList)
         }
-        callBack(true)
+        
     }
     
     func delete(taskList: TaskList, callBack: (Bool) -> Void) {

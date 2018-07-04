@@ -51,32 +51,30 @@ class TaskListViewController: UIViewController {
     }
     
     func addNewTaskList() {
-        showInputDialog(isUpdate: false) { [unowned self] (isSuccess) in
-            if isSuccess {
-                self.taskListTB.insertRows(at: [IndexPath(row: self.lists.count - 1, section: 0)], with: .automatic)
+        showInputDialog(isUpdate: false) { [unowned self] (isSuccess, taskList) in
+            if isSuccess && taskList != nil {
+                self.lists = self.lists.sorted(byKeyPath: self.orderType.getString(), ascending: self.isAscendingSort)
+                let index = self.lists.index(of: taskList!)
+                self.taskListTB.insertRows(at: [IndexPath(row: index!, section: 0)], with: .automatic)
             } else {
                 self.view.makeToast("Add new Task List fail!!!")
             }
         }
     }
     
-    func changeOrderSetting() {
-        if orderType == OrderType.name {
-            lists = lists.sorted(byKeyPath: "name", ascending: isAscendingSort)
-        } else {
-            lists = lists.sorted(byKeyPath: "createdAt", ascending: isAscendingSort)
-        }
+    func updateOrderSetting() {
+        lists = lists.sorted(byKeyPath: orderType.getString(), ascending: isAscendingSort)
         taskListTB.reloadSections(IndexSet(integer: 0), with: .automatic)
     }
     
-    func showInputDialog(isUpdate: Bool, taskList: TaskList? = nil, callback: @escaping (Bool) -> Void) {
+    func showInputDialog(isUpdate: Bool, taskList: TaskList? = nil, callback: @escaping (Bool, TaskList?) -> Void) {
         var nameTask = ""
         var title: String
         var doneTitle: String
         
         if isUpdate {
             guard taskList != nil else {
-                callback(false)
+                callback(false, nil)
                 return
             }
             title = AppMessage.UPDATE_TASK_LIST
@@ -96,7 +94,7 @@ class TaskListViewController: UIViewController {
         }
         let addAction = UIAlertAction(title: doneTitle, style: .default, handler: { [unowned self] (action) in
             guard let name = nameTextField.text else {
-                callback(false)
+                callback(false, nil)
                 return
             }
             if name.isEmpty {
@@ -120,11 +118,11 @@ class TaskListViewController: UIViewController {
         
         typeVC.addAction(UIAlertAction(title: "Ascending", style: .default) { [unowned self] (action) in
             self.isAscendingSort = true
-            self.changeOrderSetting()
+            self.updateOrderSetting()
         })
         typeVC.addAction(UIAlertAction(title: "Descending", style: .default) { [unowned self] (action) in
             self.isAscendingSort = false
-            self.changeOrderSetting()
+            self.updateOrderSetting()
         })
         
         let alertVC = UIAlertController(title: "Change order", message: nil, preferredStyle: .actionSheet)
@@ -142,6 +140,24 @@ class TaskListViewController: UIViewController {
         })
     
         self.present(alertVC, animated: true, completion: nil)
+    }
+    
+    func editTaskList(taskList: TaskList, callback: @escaping (Bool, TaskList) -> Void) {
+        self.showInputDialog(isUpdate: true, taskList: taskList, callback: { (isSuccess, taskList)  in
+            callback(isSuccess, taskList!)
+        })
+    }
+    
+    func deleteTaskList(taskList: TaskList, callback: @escaping (Bool) -> Void) {
+        TaskListService.shared.delete(taskList: taskList, callBack: { (isSuccess) in
+            callback(isSuccess)
+        })
+    }
+    
+    func openAllTaskOfList(taskList: TaskList) {
+        let vc = TasksViewController()
+        vc.taskList = taskList
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -166,22 +182,21 @@ extension TaskListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = TasksViewController()
-        vc.taskList = lists[indexPath.row]
-        self.navigationController?.pushViewController(vc, animated: true)
+        openAllTaskOfList(taskList: lists[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editAction = UITableViewRowAction(style: .default, title: AppMessage.EDIT) { (action, index) in
-            self.showInputDialog(isUpdate: true, taskList: self.lists[indexPath.row], callback: { (isSuccess) in
+        let editAction = UITableViewRowAction(style: .default, title: AppMessage.EDIT) { [unowned self] (action, index) in
+            self.editTaskList(taskList: self.lists[indexPath.row], callback: { (isSuccess, taskList) in
                 if isSuccess {
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
+                    let index = self.lists.index(of: taskList)!
+                    tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                 }
             })
         }
         editAction.backgroundColor = AppConstant.EDIT_ACTION_BG_COLOR
-        let deleteAction = UITableViewRowAction(style: .default, title: AppMessage.DELETE) { (action, index) in
-            TaskListService.shared.delete(taskList: self.lists[indexPath.row], callBack: { [unowned self] (isSuccess) in
+        let deleteAction = UITableViewRowAction(style: .default, title: AppMessage.DELETE) { [unowned self] (action, index) in
+            self.deleteTaskList(taskList: self.lists[indexPath.row], callback: { (isSuccess) in
                 if isSuccess {
                     self.taskListTB.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
                 }

@@ -16,4 +16,13 @@ class AppConstant {
 enum OrderType {
     case date
     case name
+    
+    func getString() -> String {
+        switch self {
+        case .date:
+            return "createdAt"
+        case .name:
+            return "name"
+        }
+    }
 }
