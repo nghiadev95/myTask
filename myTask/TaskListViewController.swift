@@ -176,6 +176,7 @@ extension TaskListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AppMessage.TASK_LIST_CELL_ID, for: indexPath)
         let taskList = lists[indexPath.row]
+        cell.selectionStyle = .none
         cell.textLabel?.text = taskList.name
         cell.detailTextLabel?.text = "\(taskList.tasks.count) \(AppMessage.TASK)"
         return cell

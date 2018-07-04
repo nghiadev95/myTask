@@ -19,7 +19,7 @@ class TasksViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIControl()
-        readTaskListAndReloadTableData()
+        reloadTaskList()
     }
     
     func setupUIControl() {
@@ -32,10 +32,9 @@ class TasksViewController: UITableViewController {
         openTaskView()
     }
     
-    func readTaskListAndReloadTableData() {
+    func reloadTaskList() {
         completedTasks = self.taskList.tasks.filter("isCompleted = true")
         openTasks = self.taskList.tasks.filter("isCompleted = false")
-        tableView.reloadData()
     }
     
     @objc func openTaskView() {
@@ -54,13 +53,12 @@ extension TasksViewController: NewTaskViewControllerDelegate {
         let section = item.isCompleted ?  1 : 0
         let insertedList = item.isCompleted ? completedTasks : openTasks
         self.tableView.insertRows(at: [IndexPath(row: insertedList!.count - 1, section: section)], with: .automatic)
+        self.selectedTask = nil
     }
     
     func newTaskViewController(_ controller: NewTaskViewController, didFinishingEditing item: Task) {
-        let section = item.isCompleted ?  1 : 0
-        let insertedList = item.isCompleted ? completedTasks : openTasks
-        let row = insertedList!.index(of: item)!
-        self.tableView.reloadRows(at: [IndexPath(row: row, section: section)], with: .automatic)
+        self.tableView.reloadData()
+        self.selectedTask = nil
     }
 }
 
@@ -84,6 +82,7 @@ extension TasksViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell")
         let task = indexPath.section == 0 ? openTasks[indexPath.row] : completedTasks[indexPath.row]
         cell?.textLabel?.text = task.name
+        cell?.selectionStyle = .none
         return cell!
     }
     
@@ -107,7 +106,7 @@ extension TasksViewController {
         let doneAction = UITableViewRowAction(style: .default, title: "Done") { (action, index) in
             TaskService.shared.update(task: task, newName: task.name, isComplete: true, callBack: { (isSuccess) in
                 if isSuccess {
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    self.tableView.reloadData()
                 }
             })
         }

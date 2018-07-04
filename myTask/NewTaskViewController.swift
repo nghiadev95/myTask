@@ -33,6 +33,7 @@ class NewTaskViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         isUpdating = task != nil ? true : false
+        taskNameTf.becomeFirstResponder()
     }
     
     override func loadView() {
@@ -47,6 +48,7 @@ class NewTaskViewController: UITableViewController {
             maker.left.top.equalToSuperview().offset(10)
             maker.bottom.right.equalToSuperview().offset(-10)
         }
+        nameCell.selectionStyle = .none
         
         doneBtn = UIButton()
         
@@ -58,6 +60,7 @@ class NewTaskViewController: UITableViewController {
             maker.left.top.bottom.right.equalToSuperview()
             maker.height.equalTo(40)
         }
+        doneCell.selectionStyle = .none
     }
     
     func doneBtnPressed() {
