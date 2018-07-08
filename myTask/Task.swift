@@ -9,7 +9,24 @@
 import RealmSwift
 
 class Task: Object {
+    @objc dynamic var id = UUID().uuidString
     @objc dynamic var name = ""
-    @objc dynamic var createdAt = NSDate()
+    @objc dynamic var createdAt = Date()
     @objc dynamic var isCompleted = false
+    @objc dynamic var dueDate = Date()
+    @objc dynamic var shouldNotification = false
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func clone() -> Task {
+        let task = Task()
+        task.name = name
+        task.createdAt = createdAt
+        task.isCompleted = isCompleted
+        task.dueDate = dueDate
+        task.shouldNotification = shouldNotification
+        return task
+    }
 }

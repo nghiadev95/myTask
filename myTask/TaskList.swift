@@ -9,7 +9,12 @@
 import RealmSwift
 
 class TaskList: Object {
+    @objc dynamic var id = UUID().uuidString
     @objc dynamic var name = ""
-    @objc dynamic var createdAt = NSDate()
+    @objc dynamic var createdAt = Date()
     let tasks = List<Task>()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
