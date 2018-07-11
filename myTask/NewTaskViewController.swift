@@ -16,18 +16,23 @@ class NewTaskViewController: UITableViewController {
     var dueDateCell = UITableViewCell()
     var remindCell = UITableViewCell()
     var datePickerCell = UITableViewCell()
+    var locationCell = UITableViewCell()
     
     var taskNameTf: UITextField!
     var doneBtn: UIButton!
     var dueDateLabel: UILabel!
     var remindSwitch: UISwitch!
     var datePicker: UIDatePicker!
+    var doneView: UIView!
+    var locationLabel: UILabel!
     
     var taskInfo: Task!
     var task: Task!
     var taskList: TaskList!
     var isUpdating: Bool!
     var isShowingDatePicker = true
+    
+    var heightDatePickerCS: Constraint!
     
     weak var delegate: NewTaskViewControllerDelegate?
     
@@ -54,9 +59,9 @@ class NewTaskViewController: UITableViewController {
             taskInfo.isCompleted = false
             isUpdating = false
         }
-        datePicker.setDate(taskInfo!.dueDate, animated: false)
+        //datePicker.setDate(taskInfo!.dueDate, animated: false)
         dueDateLabel.text = taskInfo!.dueDate.shortDateTimeString()
-        taskNameTf.becomeFirstResponder()
+        taskNameTf.delegate = self
     }
     
     func remindSwitchChanged() {
@@ -103,6 +108,27 @@ class NewTaskViewController: UITableViewController {
 }
 
 extension NewTaskViewController {
+    
+    func showDateTimePicker() {
+        doneView.isHidden = false
+        UIView.animate(withDuration: 0.5) {
+            self.datePicker.snp.updateConstraints({ (m) in
+                self.heightDatePickerCS.update(offset: 0)
+                self.navigationController?.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    func hideDateTimePicker() {
+        doneView.isHidden = true
+        UIView.animate(withDuration: 0.5) {
+            self.datePicker.snp.updateConstraints({ (m) in
+                self.heightDatePickerCS.update(offset: 270)
+                self.navigationController?.view.layoutIfNeeded()
+            })
+        }
+    }
+    
     override func loadView() {
         super.loadView()
         self.title = "Task detail"
@@ -136,6 +162,7 @@ extension NewTaskViewController {
         dueDateCell.addSubview(titleDueDatelabel)
         titleDueDatelabel.snp.makeConstraints { (maker) in
             maker.left.top.equalToSuperview().offset(10)
+            maker.bottom.equalToSuperview().offset(-10)
         }
         dueDateLabel = UILabel()
         dueDateLabel.text = "None"
@@ -143,15 +170,6 @@ extension NewTaskViewController {
         dueDateLabel.snp.makeConstraints { (maker) in
             maker.right.equalToSuperview().offset(-10)
             maker.top.equalToSuperview().offset(10)
-        }
-        datePicker = UIDatePicker()
-        datePicker.timeZone = NSTimeZone.local
-        datePicker.backgroundColor = .white
-        datePicker.addTarget(self, action: #selector(updateDueDateLabel(datePicker:)), for: .valueChanged)
-        datePickerCell.addSubview(datePicker)
-        datePicker.snp.makeConstraints { (m) in
-            m.left.top.equalToSuperview().offset(10)
-            m.right.bottom.equalToSuperview().offset(-10)
         }
         
         doneBtn = UIButton()
@@ -163,10 +181,68 @@ extension NewTaskViewController {
             maker.left.top.bottom.right.equalToSuperview()
             maker.height.equalTo(40)
         }
+        
+        locationCell.accessoryType = .disclosureIndicator
+        let textLabel = UILabel()
+        textLabel.text = "Location"
+        locationCell.addSubview(textLabel)
+        textLabel.snp.makeConstraints { (m) in
+            m.left.top.equalToSuperview().offset(10)
+        }
+        locationLabel = UILabel()
+        locationLabel.text = "None"
+        locationLabel.font = locationLabel.font.withSize(12)
+        locationCell.addSubview(locationLabel)
+        locationLabel.snp.makeConstraints { (m) in
+            m.top.equalTo(textLabel.snp.bottom).offset(5)
+            m.left.equalTo(textLabel.snp.left)
+            m.bottom.equalToSuperview().offset(-10)
+        }
+        
+        datePicker = UIDatePicker()
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.backgroundColor = .white
+        datePicker.addTarget(self, action: #selector(updateDueDateLabel(datePicker:)), for: .valueChanged)
+        
+        doneView = UIButton()
+        doneView.backgroundColor = .clear
+        let tapGes = UITapGestureRecognizer(target: self, action: #selector(hideDateTimePicker))
+        doneView.addGestureRecognizer(tapGes)
+        
+        navigationController?.view.addSubview(datePicker)
+        datePicker.snp.makeConstraints { (m) in
+            m.left.right.equalToSuperview()
+            heightDatePickerCS = m.bottom.equalToSuperview().offset(270).constraint
+            m.height.equalTo(220)
+        }
+        
+        navigationController?.view.addSubview(doneView)
+        doneView.snp.makeConstraints { (m) in
+            m.left.right.top.equalToSuperview()
+            m.bottom.equalTo(datePicker.snp.top)
+        }
+        doneView.isHidden = true
+    }
+}
+
+extension NewTaskViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
 
 extension NewTaskViewController {
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            if indexPath.row == 1 {
+                showDateTimePicker()
+            } else if indexPath.row == 2 {
+                
+            }
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -189,14 +265,6 @@ extension NewTaskViewController {
         cell.selectionStyle = .none
     }
     
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return indexPath.section == 1 && indexPath.row == 1 ? indexPath : nil
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        taskNameTf.resignFirstResponder()
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -213,7 +281,7 @@ extension NewTaskViewController {
             case 1:
                 return dueDateCell
             case 2:
-                return datePickerCell
+                return locationCell
             default:
                 fatalError()
             }
