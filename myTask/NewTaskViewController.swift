@@ -239,7 +239,9 @@ extension NewTaskViewController {
             if indexPath.row == 1 {
                 showDateTimePicker()
             } else if indexPath.row == 2 {
-                
+                let mapVC = MapViewController()
+                navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+                navigationController?.pushViewController(mapVC, animated: true)
             }
         }
     }

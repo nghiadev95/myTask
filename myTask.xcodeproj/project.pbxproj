@@ -12,6 +12,9 @@
 		421819B420E3F13000902682 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B320E3F13000902682 /* AppConstant.swift */; };
 		421819B620E3F25600902682 /* AppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B520E3F25600902682 /* AppMessage.swift */; };
 		421819BA20E405AE00902682 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B920E405AE00902682 /* Toast.swift */; };
+		4232FD2520F654F7005FE3CA /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232FD2420F654F7005FE3CA /* MapViewController.swift */; };
+		425A070D20F6625A003FC7CF /* SearchLocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */; };
+		425A070F20F66ED8003FC7CF /* LocationResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */; };
 		42AA51C120EBCD7600F84AEC /* NewTaskViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AA51C020EBCD7600F84AEC /* NewTaskViewControllerDelegate.swift */; };
 		42AA51C320EBD00A00F84AEC /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AA51C220EBD00A00F84AEC /* TaskService.swift */; };
 		42E0D86B20EA724A00FB923D /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */; };
@@ -35,6 +38,9 @@
 		421819B320E3F13000902682 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		421819B520E3F25600902682 /* AppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessage.swift; sourceTree = "<group>"; };
 		421819B920E405AE00902682 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		4232FD2420F654F7005FE3CA /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationTableViewController.swift; sourceTree = "<group>"; };
+		425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultTableViewCell.swift; sourceTree = "<group>"; };
 		42AA51C020EBCD7600F84AEC /* NewTaskViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewControllerDelegate.swift; sourceTree = "<group>"; };
 		42AA51C220EBD00A00F84AEC /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
 		42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 				DFCCD8F01F26E100000E054C /* TasksViewController.swift */,
 				DFCCD8F21F26E160000E054C /* TaskListViewController.swift */,
 				42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */,
+				4232FD2420F654F7005FE3CA /* MapViewController.swift */,
+				425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -179,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				DFCCD8F51F273D46000E054C /* TaskListTableViewCell.swift */,
+				425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 				42E0D86B20EA724A00FB923D /* NewTaskViewController.swift in Sources */,
 				421819B620E3F25600902682 /* AppMessage.swift in Sources */,
 				42AA51C320EBD00A00F84AEC /* TaskService.swift in Sources */,
+				425A070D20F6625A003FC7CF /* SearchLocationTableViewController.swift in Sources */,
 				DFCCD8EB1F26DDA4000E054C /* TaskList.swift in Sources */,
 				42AA51C120EBCD7600F84AEC /* NewTaskViewControllerDelegate.swift in Sources */,
 				DFCCD8E91F26DD4D000E054C /* Task.swift in Sources */,
@@ -321,9 +331,11 @@
 				DFCCD8EE1F26DF95000E054C /* RealmService.swift in Sources */,
 				421819BA20E405AE00902682 /* Toast.swift in Sources */,
 				DFCCD8F11F26E100000E054C /* TasksViewController.swift in Sources */,
+				425A070F20F66ED8003FC7CF /* LocationResultTableViewCell.swift in Sources */,
 				420DAB8520F20E4100B3ACC0 /* NSDate+Extension.swift in Sources */,
 				42E0D86D20EA8AEF00FB923D /* TaskListService.swift in Sources */,
 				421819B220E3F0FD00902682 /* UtilsFunc.swift in Sources */,
+				4232FD2520F654F7005FE3CA /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
