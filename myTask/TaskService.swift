@@ -19,6 +19,9 @@ final class TaskService {
             newTask.dueDate = taskInfo.dueDate
             newTask.isCompleted = taskInfo.isCompleted
             newTask.shouldNotification = taskInfo.shouldNotification
+            newTask.lat = taskInfo.lat
+            newTask.long = taskInfo.long
+            newTask.locationName = taskInfo.locationName
             taskList.tasks.append(newTask)
             callBack(true, newTask)
         }
@@ -30,6 +33,9 @@ final class TaskService {
             task.dueDate = taskInfo.dueDate
             task.isCompleted = taskInfo.isCompleted
             task.shouldNotification = taskInfo.shouldNotification
+            task.lat = taskInfo.lat
+            task.long = taskInfo.long
+            task.locationName = taskInfo.locationName
             RealmService.shared.reference().add(task, update: true)
         }
         callBack(true)

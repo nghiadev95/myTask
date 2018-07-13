@@ -15,6 +15,9 @@ class Task: Object {
     @objc dynamic var isCompleted = false
     @objc dynamic var dueDate = Date()
     @objc dynamic var shouldNotification = false
+    @objc dynamic var lat: Double = 0.0
+    @objc dynamic var long: Double = 0.0
+    @objc dynamic var locationName: String = ""
     
     override static func primaryKey() -> String? {
         return "id"
@@ -27,6 +30,9 @@ class Task: Object {
         task.isCompleted = isCompleted
         task.dueDate = dueDate
         task.shouldNotification = shouldNotification
+        task.lat = lat
+        task.long = long
+        task.locationName = locationName
         return task
     }
 }

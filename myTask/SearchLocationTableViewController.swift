@@ -13,12 +13,12 @@ class SearchLocationTableViewController: UITableViewController {
 
     var matchingItems: [MKMapItem] = []
     var mapView: MKMapView? = nil
+    var handleMapSearchDelegate: HandleMapSearchDelegate? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(LocationResultTableViewCell.self, forCellReuseIdentifier: "LocationCell")
     }
-
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -32,8 +32,14 @@ class SearchLocationTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell")!
         let selectedItem = matchingItems[indexPath.row].placemark
         cell.textLabel?.text = selectedItem.name
-        cell.detailTextLabel?.text = ""
+        cell.detailTextLabel?.text = UtilsFunc.parseAddress(selectedItem: selectedItem)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedItem = matchingItems[indexPath.row].placemark
+        handleMapSearchDelegate?.dropPinZoomIn(placemark: selectedItem)
+        dismiss(animated: true, completion: nil)
     }
 }
 

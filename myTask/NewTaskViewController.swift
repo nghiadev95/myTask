@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import UserNotifications
+import MapKit
 
 class NewTaskViewController: UITableViewController {
     var nameCell = UITableViewCell()
@@ -50,6 +51,7 @@ class NewTaskViewController: UITableViewController {
             taskInfo = task.clone()
             taskNameTf.text = task.name
             remindSwitch.isOn = task.shouldNotification
+            locationLabel.text = task.locationName
             doneBtn.setTitle("Update", for: .normal)
             isUpdating = true
         } else {
@@ -57,6 +59,7 @@ class NewTaskViewController: UITableViewController {
             taskInfo.dueDate = Date()
             taskInfo.shouldNotification = false
             taskInfo.isCompleted = false
+            taskInfo.lat = 0.0
             isUpdating = false
         }
         //datePicker.setDate(taskInfo!.dueDate, animated: false)
@@ -196,6 +199,7 @@ extension NewTaskViewController {
         locationLabel.snp.makeConstraints { (m) in
             m.top.equalTo(textLabel.snp.bottom).offset(5)
             m.left.equalTo(textLabel.snp.left)
+            m.right.equalToSuperview().offset(-20)
             m.bottom.equalToSuperview().offset(-10)
         }
         
@@ -232,6 +236,15 @@ extension NewTaskViewController: UITextFieldDelegate {
     }
 }
 
+extension NewTaskViewController: MapViewControllerDelegate {
+    func mapViewController(_ controller: MapViewController, didSelectedLocation location: MKPlacemark) {
+        taskInfo.lat = location.coordinate.latitude
+        taskInfo.long = location.coordinate.longitude
+        taskInfo.locationName = UtilsFunc.parseAddress(selectedItem: location)
+        locationLabel.text = taskInfo.locationName
+    }
+}
+
 extension NewTaskViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -240,6 +253,10 @@ extension NewTaskViewController {
                 showDateTimePicker()
             } else if indexPath.row == 2 {
                 let mapVC = MapViewController()
+                if taskInfo.lat != 0.0 {
+                    mapVC.selectedLocation = CLLocation(latitude: taskInfo.lat, longitude: taskInfo.long)
+                }
+                mapVC.delegate = self
                 navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
                 navigationController?.pushViewController(mapVC, animated: true)
             }
