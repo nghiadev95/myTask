@@ -12,6 +12,7 @@ class TaskList: Object {
     @objc dynamic var id = UUID().uuidString
     @objc dynamic var name = ""
     @objc dynamic var createdAt = Date()
+    @objc dynamic var icon = ""
     let tasks = List<Task>()
     
     override static func primaryKey() -> String? {

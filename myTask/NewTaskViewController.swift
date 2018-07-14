@@ -63,11 +63,11 @@ class NewTaskViewController: UITableViewController {
             isUpdating = false
         }
         //datePicker.setDate(taskInfo!.dueDate, animated: false)
-        dueDateLabel.text = taskInfo!.dueDate.shortDateTimeString()
+        dueDateLabel.text = taskInfo!.dueDate.shortDateTime()
         taskNameTf.delegate = self
     }
     
-    func remindSwitchChanged() {
+    @objc func remindSwitchChanged() {
         if remindSwitch.isOn {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (granted, error) in
                 if granted {
@@ -82,7 +82,7 @@ class NewTaskViewController: UITableViewController {
         taskInfo.shouldNotification = remindSwitch.isOn
     }
     
-    func doneBtnPressed() {
+    @objc func doneBtnPressed() {
         guard let name = taskNameTf.text, !name.isEmpty else {
             navigationController?.view.makeToast("Name must not empty")
             return
@@ -104,8 +104,8 @@ class NewTaskViewController: UITableViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    func updateDueDateLabel(datePicker: UIDatePicker) {
-        dueDateLabel.text = datePicker.date.shortDateTimeString()
+    @objc func updateDueDateLabel(datePicker: UIDatePicker) {
+        dueDateLabel.text = datePicker.date.shortDateTime()
         taskInfo?.dueDate = datePicker.date
     }
 }
@@ -122,7 +122,7 @@ extension NewTaskViewController {
         }
     }
     
-    func hideDateTimePicker() {
+    @objc func hideDateTimePicker() {
         doneView.isHidden = true
         UIView.animate(withDuration: 0.5) {
             self.datePicker.snp.updateConstraints({ (m) in
