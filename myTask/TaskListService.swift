@@ -12,19 +12,20 @@ final class TaskListService {
     public static let shared = TaskListService()
     private init() {}
     
-    func add(name: String, icon: String, callBack: ((Bool, TaskList) -> Void)?) {
+    func add(name: String, iconId: Int, callBack: ((Bool, TaskList) -> Void)?) {
         try! RealmService.shared.reference().write {
             let newTaskList = TaskList()
             newTaskList.name = name
-            newTaskList.icon = icon
+            newTaskList.iconId = iconId
             RealmService.shared.reference().add(newTaskList)
             callBack?(true, newTaskList)
         }
     }
     
-    func update(taskList: TaskList, newName: String, callBack: (Bool, TaskList) -> Void) {
+    func update(taskList: TaskList, newName: String, newIconId: Int, callBack: (Bool, TaskList) -> Void) {
         try! RealmService.shared.reference().write {
             taskList.name = newName
+            taskList.iconId = newIconId
             callBack(true, taskList)
         }
         
@@ -44,9 +45,9 @@ final class TaskListService {
     func createDefaultTaskListIfNeeded() {
         if getNumberOfTaskList() == 0 {
             let names = ["All Schedule", "Personal Errands", "Work Projects", "Grocery List", "Other"]
-            let icons = ["allSchedule", "personalErrands", "workProjects", "groceryList", "other"]
+            
             for index in 0...4 {
-                add(name: names[index], icon: icons[index], callBack: nil)
+                add(name: names[index], iconId: index, callBack: nil)
             }
         }
     }

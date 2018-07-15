@@ -14,7 +14,7 @@ class TaskListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lbNumOfTask: UILabel!
     
     func update(with data: TaskList) {
-        imgIcon.image = UIImage(named: data.icon)
+        imgIcon.image = UIImage(named: AppConstant.icons[data.iconId])
         lbName.text = data.name
         lbNumOfTask.text = "\(data.tasks.count) tasks"
     }

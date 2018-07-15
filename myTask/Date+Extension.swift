@@ -11,8 +11,8 @@ import Foundation
 extension Date {
     func shortDateTime() -> String {
         let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .medium
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
         return formatter.string(from: self)
     }
     
@@ -25,6 +25,18 @@ extension Date {
     func getSortDate() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM dd yyyy"
+        return formatter.string(from: self)
+    }
+    
+    func getMediumDate() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/mm/yyyy"
+        return formatter.string(from: self)
+    }
+    
+    func getShortTime() -> String{
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
         return formatter.string(from: self)
     }
 }

@@ -10,7 +10,7 @@
 		4203648820FA4C4700E8710F /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203648720FA4C4700E8710F /* UIButton+Extension.swift */; };
 		4203648A20FA68FB00E8710F /* NewTaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203648920FA68FB00E8710F /* NewTaskListViewController.swift */; };
 		4203648D20FA703B00E8710F /* IconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203648C20FA703B00E8710F /* IconCollectionViewCell.swift */; };
-		4203648F20FA767000E8710F /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203648E20FA767000E8710F /* TaskListViewController.swift */; };
+		4203648F20FA767000E8710F /* TaskListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4203648E20FA767000E8710F /* TaskListDetailViewController.swift */; };
 		420DAB8520F20E4100B3ACC0 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420DAB8420F20E4100B3ACC0 /* Date+Extension.swift */; };
 		421819B220E3F0FD00902682 /* UtilsFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B120E3F0FD00902682 /* UtilsFunc.swift */; };
 		421819B420E3F13000902682 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B320E3F13000902682 /* AppConstant.swift */; };
@@ -22,10 +22,13 @@
 		425192DE20F90CDF0044523B /* TaskListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425192DD20F90CDF0044523B /* TaskListCollectionViewCell.swift */; };
 		425A070D20F6625A003FC7CF /* SearchLocationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */; };
 		425A070F20F66ED8003FC7CF /* LocationResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */; };
+		4299711B20FAEFFE00A0F6AE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4299711A20FAEFFE00A0F6AE /* BaseViewController.swift */; };
+		4299711D20FAFA8400A0F6AE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4299711C20FAFA8400A0F6AE /* UIColor+Extension.swift */; };
+		4299711F20FAFCBD00A0F6AE /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4299711E20FAFCBD00A0F6AE /* TaskTableViewCell.swift */; };
 		42AA51C120EBCD7600F84AEC /* ViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AA51C020EBCD7600F84AEC /* ViewController+Delegate.swift */; };
 		42AA51C320EBD00A00F84AEC /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AA51C220EBD00A00F84AEC /* TaskService.swift */; };
-		42E0D86B20EA724A00FB923D /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */; };
 		42E0D86D20EA8AEF00FB923D /* TaskListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0D86C20EA8AEF00FB923D /* TaskListService.swift */; };
+		42F4A63B20FB84DC000BD202 /* NewTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4A63A20FB84DC000BD202 /* NewTaskViewController.swift */; };
 		D5A000F1F2F3796B9C692C34 /* Pods_myTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037F4197A5C098A28D18DA35 /* Pods_myTask.framework */; };
 		DF2530EF1F26DAAA00838376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF2530EE1F26DAAA00838376 /* AppDelegate.swift */; };
 		DF2530F61F26DAAA00838376 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF2530F51F26DAAA00838376 /* Assets.xcassets */; };
@@ -40,7 +43,7 @@
 		4203648720FA4C4700E8710F /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		4203648920FA68FB00E8710F /* NewTaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskListViewController.swift; sourceTree = "<group>"; };
 		4203648C20FA703B00E8710F /* IconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionViewCell.swift; sourceTree = "<group>"; };
-		4203648E20FA767000E8710F /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
+		4203648E20FA767000E8710F /* TaskListDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListDetailViewController.swift; sourceTree = "<group>"; };
 		420DAB8420F20E4100B3ACC0 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		421819B120E3F0FD00902682 /* UtilsFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsFunc.swift; sourceTree = "<group>"; };
 		421819B320E3F13000902682 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
@@ -52,10 +55,13 @@
 		425192DD20F90CDF0044523B /* TaskListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListCollectionViewCell.swift; sourceTree = "<group>"; };
 		425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationTableViewController.swift; sourceTree = "<group>"; };
 		425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationResultTableViewCell.swift; sourceTree = "<group>"; };
+		4299711A20FAEFFE00A0F6AE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		4299711C20FAFA8400A0F6AE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		4299711E20FAFCBD00A0F6AE /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		42AA51C020EBCD7600F84AEC /* ViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Delegate.swift"; sourceTree = "<group>"; };
 		42AA51C220EBD00A00F84AEC /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
-		42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		42E0D86C20EA8AEF00FB923D /* TaskListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListService.swift; sourceTree = "<group>"; };
+		42F4A63A20FB84DC000BD202 /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		8D3680EF58E90094D0436A87 /* Pods-myTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-myTask/Pods-myTask.release.xcconfig"; sourceTree = "<group>"; };
 		A5106BE61260D1C1B5B5CF52 /* Pods-myTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTask.debug.xcconfig"; path = "Pods/Target Support Files/Pods-myTask/Pods-myTask.debug.xcconfig"; sourceTree = "<group>"; };
 		DF2530EB1F26DAAA00838376 /* myTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,6 +111,7 @@
 				421819B520E3F25600902682 /* AppMessage.swift */,
 				420DAB8420F20E4100B3ACC0 /* Date+Extension.swift */,
 				4203648720FA4C4700E8710F /* UIButton+Extension.swift */,
+				4299711C20FAFA8400A0F6AE /* UIColor+Extension.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -157,7 +164,7 @@
 				42AA51BF20EBCD3900F84AEC /* Protocol */,
 				421819B720E4056800902682 /* Libs */,
 				421819B020E3F0E700902682 /* Utils */,
-				DFCCD8F41F273D2B000E054C /* View */,
+				DFCCD8F41F273D2B000E054C /* Cell */,
 				DFCCD8EF1F26E0F2000E054C /* Controller */,
 				DFCCD8EC1F26DF88000E054C /* Service */,
 				DFCCD8E71F26DD40000E054C /* Model */,
@@ -192,24 +199,26 @@
 		DFCCD8EF1F26E0F2000E054C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				42E0D86A20EA724A00FB923D /* NewTaskViewController.swift */,
 				4232FD2420F654F7005FE3CA /* MapViewController.swift */,
 				425A070C20F6625A003FC7CF /* SearchLocationTableViewController.swift */,
+				4299711A20FAEFFE00A0F6AE /* BaseViewController.swift */,
 				425192DB20F90B530044523B /* MainViewController.swift */,
+				4203648E20FA767000E8710F /* TaskListDetailViewController.swift */,
 				4203648920FA68FB00E8710F /* NewTaskListViewController.swift */,
-				4203648E20FA767000E8710F /* TaskListViewController.swift */,
+				42F4A63A20FB84DC000BD202 /* NewTaskViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		DFCCD8F41F273D2B000E054C /* View */ = {
+		DFCCD8F41F273D2B000E054C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				425A070E20F66ED8003FC7CF /* LocationResultTableViewCell.swift */,
 				425192DD20F90CDF0044523B /* TaskListCollectionViewCell.swift */,
 				4203648C20FA703B00E8710F /* IconCollectionViewCell.swift */,
+				4299711E20FAFCBD00A0F6AE /* TaskTableViewCell.swift */,
 			);
-			name = View;
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		F986A9D3BA4B3889036E7D05 /* Frameworks */ = {
@@ -339,10 +348,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				421819B420E3F13000902682 /* AppConstant.swift in Sources */,
-				42E0D86B20EA724A00FB923D /* NewTaskViewController.swift in Sources */,
-				4203648F20FA767000E8710F /* TaskListViewController.swift in Sources */,
+				4203648F20FA767000E8710F /* TaskListDetailViewController.swift in Sources */,
+				4299711B20FAEFFE00A0F6AE /* BaseViewController.swift in Sources */,
 				4203648D20FA703B00E8710F /* IconCollectionViewCell.swift in Sources */,
 				421819B620E3F25600902682 /* AppMessage.swift in Sources */,
+				42F4A63B20FB84DC000BD202 /* NewTaskViewController.swift in Sources */,
 				42AA51C320EBD00A00F84AEC /* TaskService.swift in Sources */,
 				425A070D20F6625A003FC7CF /* SearchLocationTableViewController.swift in Sources */,
 				DFCCD8EB1F26DDA4000E054C /* TaskList.swift in Sources */,
@@ -352,7 +362,9 @@
 				DFCCD8EE1F26DF95000E054C /* RealmService.swift in Sources */,
 				421819BA20E405AE00902682 /* Toast.swift in Sources */,
 				425192DE20F90CDF0044523B /* TaskListCollectionViewCell.swift in Sources */,
+				4299711D20FAFA8400A0F6AE /* UIColor+Extension.swift in Sources */,
 				425A070F20F66ED8003FC7CF /* LocationResultTableViewCell.swift in Sources */,
+				4299711F20FAFCBD00A0F6AE /* TaskTableViewCell.swift in Sources */,
 				4203648820FA4C4700E8710F /* UIButton+Extension.swift in Sources */,
 				420DAB8520F20E4100B3ACC0 /* Date+Extension.swift in Sources */,
 				42E0D86D20EA8AEF00FB923D /* TaskListService.swift in Sources */,

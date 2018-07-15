@@ -66,13 +66,18 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         if selectedLocation != nil {
             let seletedPlaceMark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: selectedLocation!.coordinate.latitude, longitude: selectedLocation!.coordinate.longitude))
             dropPinZoomIn(placemark: seletedPlaceMark)
-//            centerMapWithLocation(location: selectedLocation!)
         } else if let location = currentLocation {
             centerMapWithLocation(location: location)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     @objc func selectLocation(){
@@ -96,7 +101,7 @@ extension MapViewController: MKMapViewDelegate {
         pinView?.canShowCallout = true
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: .zero, size: smallSquare))
-        button.setBackgroundImage(UIImage(named: "sort"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "shouldNotification"), for: .normal)
         button.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
         pinView?.leftCalloutAccessoryView = button
         return pinView

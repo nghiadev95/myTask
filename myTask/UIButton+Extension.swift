@@ -9,10 +9,10 @@
 import UIKit
 
 extension UIButton{
-    func roundedButton(byCorners: UIRectCorner){
+    func roundedButton(byCorners: UIRectCorner, cornerRadii: CGSize){
         let maskPath1 = UIBezierPath(roundedRect: bounds,
                                      byRoundingCorners: byCorners,
-                                     cornerRadii: CGSize(width: 8, height: 8))
+                                     cornerRadii: cornerRadii)
         let maskLayer1 = CAShapeLayer()
         maskLayer1.frame = bounds
         maskLayer1.path = maskPath1.cgPath

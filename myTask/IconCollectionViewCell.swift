@@ -10,8 +10,13 @@ import UIKit
 
 class IconCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imgIcon: UIImageView!
+    @IBOutlet weak var vCover: UIView!
     
     func setIcon(iconName: String) {
         imgIcon.image = UIImage(named: iconName)
+    }
+    
+    func updateCheckState(isChecked: Bool) {
+        vCover.isHidden = !isChecked
     }
 }

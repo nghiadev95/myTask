@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class MainViewController: UIViewController {
+class MainViewController: BaseViewController {
 
     @IBOutlet weak var lbUserName: UILabel!
     @IBOutlet weak var lbToday: UILabel!
@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
         let dayString = today.dayOfWeek()
         let todayString = dayString + ", " + today.getSortDate()
         lbToday.attributedText = UtilsFunc.attributedText(withString: todayString, boldString: dayString, font: lbToday.font)
-        btnAddTaskList.roundedButton(byCorners: [.topLeft])
+        btnAddTaskList.roundedButton(byCorners: [.topLeft], cornerRadii: CGSize(width: 8, height: 8))
     }
     
     private func setupCollectionView() {
@@ -55,6 +55,7 @@ class MainViewController: UIViewController {
         let tasks = RealmService.shared.reference().objects(Task.self)
         lbNumOfCompleted.text = "\(tasks.filter("isCompleted = true").count)"
         lbNumOfCreated.text = "\(tasks.count)"
+        clvTaskLists.reloadData()
     }
     
     @IBAction func btnUserSettingPressed(_ sender: Any) {
@@ -62,14 +63,8 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func btnAddPressed(_ sender: Any) {
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: "newTaskList") else {
-            return
-        }
-        navigationController?.pushViewController(vc, animated: true)
-//        present(TaskListViewController(), animated: true, completion: nil)
+        pushNewTaskListViewController(with: nil)
     }
-    
-    
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -101,5 +96,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        pushTaskListDetailViewController(with: taskLists[indexPath.row])
     }
 }
