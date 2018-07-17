@@ -1,3 +1,4 @@
+![alt text](/Screenshot/logo.png)
 # myTask
 TaskList App - made with #Realm
 # Screenshot
