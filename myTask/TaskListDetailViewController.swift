@@ -26,17 +26,6 @@ class TaskListDetailViewController: BaseViewController {
         tbTasks.dataSource = self
         setupSCOrderType()
         btnAdd.roundedButton(byCorners: [.topLeft], cornerRadii: CGSize(width: 8, height: 8))
-        
-//        for _ in 0...4 {
-//            let task = Task()
-//            task.createdAt = Date()
-//            task.shouldNotification = true
-//            task.isCompleted = false
-//            task.locationName = "43/3 Ung Van Khiem, Phuong 26, Quan Binh Thanh"
-//            task.dueDate = Date()
-//            task.name = "Test task"
-//            TaskService.shared.add(taskInfo: task, taskList: taskList, callBack: nil)
-//        }
     }
     
     func setupSCOrderType() {
@@ -75,14 +64,19 @@ class TaskListDetailViewController: BaseViewController {
     }
     
     @IBAction func btnAddPressed(_ sender: Any) {
-        pushNewTaskViewController(taskList: taskList, task: nil)
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "newTaskViewController") as? NewTaskViewController else {
+            return
+        }
+        vc.taskList = taskList
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func scheduleNotification(task: Task) {
         removeNotification(id: task.id)
         if task.shouldNotification && task.dueDate > Date() {
             let content = UNMutableNotificationContent()
-            content.title = "You need to do now"
+            content.title = taskList.name
             content.body = task.name
             content.sound = UNNotificationSound.default()
             let dateComponent = Calendar(identifier: .gregorian).dateComponents([.month, .day, .hour, .minute], from: task.dueDate)
@@ -132,7 +126,13 @@ extension TaskListDetailViewController: UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        pushNewTaskViewController(taskList: taskList, task: tasks[indexPath.row])
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "newTaskViewController") as? NewTaskViewController else {
+            return
+        }
+        vc.task = tasks[indexPath.row]
+        vc.taskList = taskList
+        vc.delegate = self
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

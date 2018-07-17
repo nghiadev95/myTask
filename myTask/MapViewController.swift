@@ -23,6 +23,10 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.backgroundColor = UIColor.init(hex: "F5F6FB")
+        navigationController?.navigationBar.tintColor = UIColor.init(hex: "464084")
+        navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -101,7 +105,7 @@ extension MapViewController: MKMapViewDelegate {
         pinView?.canShowCallout = true
         let smallSquare = CGSize(width: 30, height: 30)
         let button = UIButton(frame: CGRect(origin: .zero, size: smallSquare))
-        button.setBackgroundImage(UIImage(named: "shouldNotification"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "checked"), for: .normal)
         button.addTarget(self, action: #selector(selectLocation), for: .touchUpInside)
         pinView?.leftCalloutAccessoryView = button
         return pinView

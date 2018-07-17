@@ -44,7 +44,7 @@ final class TaskListService {
     
     func createDefaultTaskListIfNeeded() {
         if getNumberOfTaskList() == 0 {
-            let names = ["All Schedule", "Personal Errands", "Work Projects", "Grocery List", "Other"]
+            let names = ["Daily Schedule", "Personal Errands", "Work Projects", "Grocery List", "Other"]
             
             for index in 0...4 {
                 add(name: names[index], iconId: index, callBack: nil)

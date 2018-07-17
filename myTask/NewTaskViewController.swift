@@ -33,6 +33,7 @@ class NewTaskViewController: BaseViewController {
         addDatePicker()
         tfName.delegate = self
         btnAdd.roundedButton(byCorners: [.allCorners], cornerRadii: CGSize(width: btnAdd.frame.width/2, height: btnAdd.frame.width/2))
+        swReminder.addTarget(self, action: #selector(remindSwitchChanged), for: .valueChanged)
     }
     
     func addDatePicker() {
@@ -84,23 +85,26 @@ class NewTaskViewController: BaseViewController {
             makeToast(message: "Task name must not empty")
             return
         }
+        taskInfo.name = name
         if task != nil {
-            TaskService.shared.update(task: task, taskInfo: taskInfo) { [weak self] (isSuccess) in
+            TaskService.shared.update(task: task, taskInfo: taskInfo) { [unowned self] (isSuccess) in
                 if isSuccess {
-                    self?.makeToast(message: "Update Task successful")
+                    self.makeToast(message: "Update Task successful")
                 } else {
-                    self?.makeToast(message: "Have an error when update Task")
+                    self.makeToast(message: "Have an error when update Task")
                 }
-                self?.pop(animated: true)
+                self.delegate?.newTaskViewController(self, didFinishingEditing: task)
+                self.pop(animated: true)
             }
         } else {
-            TaskService.shared.add(taskInfo: taskInfo, taskList: taskList) { [weak self] (isSuccess, task) in
+            TaskService.shared.add(taskInfo: taskInfo, taskList: taskList) { [unowned self] (isSuccess, task) in
                 if isSuccess {
-                    self?.makeToast(message: "Add new Task successful")
+                    self.makeToast(message: "Add new Task successful")
                 } else {
-                    self?.makeToast(message: "Have an error when add new Task")
+                    self.makeToast(message: "Have an error when add new Task")
                 }
-                self?.pop(animated: true)
+                self.delegate?.newTaskViewController(self, didFinishingAdding: task)
+                self.pop(animated: true)
             }
         }
     }

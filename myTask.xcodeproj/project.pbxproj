@@ -16,6 +16,9 @@
 		421819B420E3F13000902682 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B320E3F13000902682 /* AppConstant.swift */; };
 		421819B620E3F25600902682 /* AppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B520E3F25600902682 /* AppMessage.swift */; };
 		421819BA20E405AE00902682 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421819B920E405AE00902682 /* Toast.swift */; };
+		4230207220FCE1A500E38C26 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4230207120FCE1A500E38C26 /* ProfileViewController.swift */; };
+		4230207420FCE44900E38C26 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4230207320FCE44900E38C26 /* User.swift */; };
+		4230207620FCE4B300E38C26 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4230207520FCE4B300E38C26 /* UserService.swift */; };
 		4232FD2520F654F7005FE3CA /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232FD2420F654F7005FE3CA /* MapViewController.swift */; };
 		425192DA20F8EEB20044523B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 425192D920F8EEB20044523B /* Main.storyboard */; };
 		425192DC20F90B530044523B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425192DB20F90B530044523B /* MainViewController.swift */; };
@@ -49,6 +52,9 @@
 		421819B320E3F13000902682 /* AppConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 		421819B520E3F25600902682 /* AppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMessage.swift; sourceTree = "<group>"; };
 		421819B920E405AE00902682 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		4230207120FCE1A500E38C26 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		4230207320FCE44900E38C26 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4230207520FCE4B300E38C26 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		4232FD2420F654F7005FE3CA /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		425192D920F8EEB20044523B /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		425192DB20F90B530044523B /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +188,7 @@
 			children = (
 				DFCCD8E81F26DD4D000E054C /* Task.swift */,
 				DFCCD8EA1F26DDA4000E054C /* TaskList.swift */,
+				4230207320FCE44900E38C26 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -192,6 +199,7 @@
 				DFCCD8ED1F26DF95000E054C /* RealmService.swift */,
 				42E0D86C20EA8AEF00FB923D /* TaskListService.swift */,
 				42AA51C220EBD00A00F84AEC /* TaskService.swift */,
+				4230207520FCE4B300E38C26 /* UserService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 				4203648E20FA767000E8710F /* TaskListDetailViewController.swift */,
 				4203648920FA68FB00E8710F /* NewTaskListViewController.swift */,
 				42F4A63A20FB84DC000BD202 /* NewTaskViewController.swift */,
+				4230207120FCE1A500E38C26 /* ProfileViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -347,16 +356,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4230207620FCE4B300E38C26 /* UserService.swift in Sources */,
 				421819B420E3F13000902682 /* AppConstant.swift in Sources */,
 				4203648F20FA767000E8710F /* TaskListDetailViewController.swift in Sources */,
 				4299711B20FAEFFE00A0F6AE /* BaseViewController.swift in Sources */,
 				4203648D20FA703B00E8710F /* IconCollectionViewCell.swift in Sources */,
 				421819B620E3F25600902682 /* AppMessage.swift in Sources */,
+				4230207420FCE44900E38C26 /* User.swift in Sources */,
 				42F4A63B20FB84DC000BD202 /* NewTaskViewController.swift in Sources */,
 				42AA51C320EBD00A00F84AEC /* TaskService.swift in Sources */,
 				425A070D20F6625A003FC7CF /* SearchLocationTableViewController.swift in Sources */,
 				DFCCD8EB1F26DDA4000E054C /* TaskList.swift in Sources */,
 				42AA51C120EBCD7600F84AEC /* ViewController+Delegate.swift in Sources */,
+				4230207220FCE1A500E38C26 /* ProfileViewController.swift in Sources */,
 				DFCCD8E91F26DD4D000E054C /* Task.swift in Sources */,
 				DF2530EF1F26DAAA00838376 /* AppDelegate.swift in Sources */,
 				DFCCD8EE1F26DF95000E054C /* RealmService.swift in Sources */,

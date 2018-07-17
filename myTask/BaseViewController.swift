@@ -39,13 +39,14 @@ class BaseViewController: UIViewController {
     }
     
     func pushNewTaskViewController(taskList: TaskList, task: Task?) {
-        guard let vc = storyboard?.instantiateViewController(withIdentifier: "newTaskViewController") as? NewTaskViewController else {
+
+    }
+    
+    func pushProfileViewController(with user: User) {
+        guard let vc = storyboard?.instantiateViewController(withIdentifier: "profileViewController") as? ProfileViewController else {
             return
         }
-        if task != nil {
-            vc.task = task
-        }
-        vc.taskList = taskList
+        vc.user = user
         navigationController?.pushViewController(vc, animated: true)
     }
     

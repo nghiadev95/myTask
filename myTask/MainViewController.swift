@@ -20,10 +20,12 @@ class MainViewController: BaseViewController {
     
     var taskLists: Results<TaskList>!
     let itemsPerRow: CGFloat = 2
+    var user: User!
     fileprivate let sectionInsets = UIEdgeInsets.zero
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        user = UserService.shared.getDefaultUser()
         setupCollectionView()
         setupUI()
     }
@@ -34,6 +36,7 @@ class MainViewController: BaseViewController {
         let todayString = dayString + ", " + today.getSortDate()
         lbToday.attributedText = UtilsFunc.attributedText(withString: todayString, boldString: dayString, font: lbToday.font)
         btnAddTaskList.roundedButton(byCorners: [.topLeft], cornerRadii: CGSize(width: 8, height: 8))
+        lbUserName.text = user.name
     }
     
     private func setupCollectionView() {
@@ -55,11 +58,12 @@ class MainViewController: BaseViewController {
         let tasks = RealmService.shared.reference().objects(Task.self)
         lbNumOfCompleted.text = "\(tasks.filter("isCompleted = true").count)"
         lbNumOfCreated.text = "\(tasks.count)"
+        lbUserName.text = user.name
         clvTaskLists.reloadData()
     }
     
     @IBAction func btnUserSettingPressed(_ sender: Any) {
-        
+        pushProfileViewController(with: user)
     }
     
     @IBAction func btnAddPressed(_ sender: Any) {
