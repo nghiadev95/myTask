@@ -7,6 +7,6 @@ target 'myTask' do
 
   # Pods for myTask
   pod 'RealmSwift'
-  pod 'SnapKit', '~> 3.2.0'
+  pod 'SnapKit'
 
 end

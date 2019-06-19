@@ -54,7 +54,7 @@ class MapViewController: UIViewController {
     }
     
     func centerMapWithLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.005, 0.005)
+        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         var region: MKCoordinateRegion
         if selectedLocation != nil {
             region = MKCoordinateRegion(center: selectedLocation!.coordinate, span: span)
@@ -122,8 +122,8 @@ extension MapViewController: HandleMapSearchDelegate {
             annotation.subtitle = "\(city) \(state)"
         }
         mapView.addAnnotation(annotation)
-        let span = MKCoordinateSpanMake(0.005, 0.005)
-        let region = MKCoordinateRegionMake(placemark.coordinate, span)
+        let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+        let region = MKCoordinateRegion(center: placemark.coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
 }

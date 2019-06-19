@@ -42,8 +42,8 @@ class TaskListDetailViewController: BaseViewController {
     func setupSCOrderType() {
         scOrderType.backgroundColor = .clear
         scOrderType.tintColor = .clear
-        scOrderType.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.init(hex: "7470A3")], for: .normal)
-        scOrderType.setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.init(hex: "FF4954")], for: .selected)
+        scOrderType.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(hex: "7470A3")], for: .normal)
+        scOrderType.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(hex: "FF4954")], for: .selected)
         scOrderType.addTarget(self, action: #selector(scOrderTypeValueChanged(_:)), for: .valueChanged)
     }
     
@@ -84,7 +84,7 @@ class TaskListDetailViewController: BaseViewController {
             let content = UNMutableNotificationContent()
             content.title = "You need to do now"
             content.body = task.name
-            content.sound = UNNotificationSound.default()
+            content.sound = UNNotificationSound.default
             let dateComponent = Calendar(identifier: .gregorian).dateComponents([.month, .day, .hour, .minute], from: task.dueDate)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
             let request = UNNotificationRequest(identifier: task.id, content: content, trigger: trigger)
