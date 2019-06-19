@@ -64,7 +64,7 @@
 		42F4A63A20FB84DC000BD202 /* NewTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewController.swift; sourceTree = "<group>"; };
 		8D3680EF58E90094D0436A87 /* Pods-myTask.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTask.release.xcconfig"; path = "Pods/Target Support Files/Pods-myTask/Pods-myTask.release.xcconfig"; sourceTree = "<group>"; };
 		A5106BE61260D1C1B5B5CF52 /* Pods-myTask.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myTask.debug.xcconfig"; path = "Pods/Target Support Files/Pods-myTask/Pods-myTask.debug.xcconfig"; sourceTree = "<group>"; };
-		DF2530EB1F26DAAA00838376 /* myTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF2530EB1F26DAAA00838376 /* myTask Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "myTask Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF2530EE1F26DAAA00838376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF2530F51F26DAAA00838376 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF2530F81F26DAAA00838376 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 		DF2530EC1F26DAAA00838376 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DF2530EB1F26DAAA00838376 /* myTask.app */,
+				DF2530EB1F26DAAA00838376 /* myTask Dev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -232,9 +232,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DF2530EA1F26DAAA00838376 /* myTask */ = {
+		DF2530EA1F26DAAA00838376 /* myTask Dev */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DF2530FD1F26DAAA00838376 /* Build configuration list for PBXNativeTarget "myTask" */;
+			buildConfigurationList = DF2530FD1F26DAAA00838376 /* Build configuration list for PBXNativeTarget "myTask Dev" */;
 			buildPhases = (
 				16922E8BC58FF1789FA26B22 /* [CP] Check Pods Manifest.lock */,
 				DF2530E71F26DAAA00838376 /* Sources */,
@@ -246,9 +246,9 @@
 			);
 			dependencies = (
 			);
-			name = myTask;
+			name = "myTask Dev";
 			productName = myTask;
-			productReference = DF2530EB1F26DAAA00838376 /* myTask.app */;
+			productReference = DF2530EB1F26DAAA00838376 /* myTask Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -281,7 +281,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DF2530EA1F26DAAA00838376 /* myTask */,
+				DF2530EA1F26DAAA00838376 /* myTask Dev */,
 			);
 		};
 /* End PBXProject section */
@@ -491,7 +491,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = myTask/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nghianq.myTask;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nghianq.myTask.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -507,7 +507,7 @@
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = myTask/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nghianq.myTask;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nghianq.myTask.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -526,7 +526,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DF2530FD1F26DAAA00838376 /* Build configuration list for PBXNativeTarget "myTask" */ = {
+		DF2530FD1F26DAAA00838376 /* Build configuration list for PBXNativeTarget "myTask Dev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DF2530FE1F26DAAA00838376 /* Debug */,
